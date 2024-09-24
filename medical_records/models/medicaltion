@@ -1,0 +1,36 @@
+from django.db import models
+from ..models import MedicalRecord
+
+DOSAGE_UNITS = [
+    ('mg', 'Milligrams'),
+    ('ml', 'Milliliters'),
+    ('g', 'Grams'),
+    ('pills', 'Pills'),
+    ('units', 'Units'),
+]
+
+FREQUENCY_CHOICES = [
+    ('once_daily', 'Once a day'),
+    ('twice_daily', 'Twice a day'),
+    ('thrice_daily', 'Three times a day'),
+    ('every_6_hours', 'Every 6 hours'),
+]
+
+DURATION_UNITS = [
+    ('days', 'Days'),
+    ('weeks', 'Weeks'),
+    ('months', 'Months'),
+]
+
+class Medication(models.Model):
+    medical_record = models.ForeignKey(MedicalRecord, on_delete=models.CASCADE, related_name='medications')
+    medication_name = models.CharField(max_length=255, help_text="Name of the medication")
+    dosage = models.DecimalField(max_digits=5, decimal_places=2, help_text="Dosage prescribed (e.g., 500)")
+    dosage_unit = models.CharField(max_length=10, choices=DOSAGE_UNITS, default='mg', help_text="Dosage unit (e.g., mg, ml, pills)")
+    frequency = models.CharField(max_length=50, choices=FREQUENCY_CHOICES, help_text="Frequency of use (e.g., Twice a day)")
+    duration = models.PositiveIntegerField(help_text="Duration value (e.g., 2)")
+    duration_unit = models.CharField(max_length=10, choices=DURATION_UNITS, default='days', help_text="Duration unit (e.g., days, weeks)")
+    notes = models.TextField(blank=True, null=True, help_text="Additional instructions or notes")
+
+    def __str__(self):
+        return f"{self.medication_name} - {self.dosage} {self.dosage_unit}, {self.frequency}"

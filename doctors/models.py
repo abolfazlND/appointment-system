@@ -14,8 +14,8 @@ class Doctor(models.Model):
 
 class DoctorAvailability(models.Model):
     SLOT_TYPE_CHOICES = [
-        ('appointment', 'Appointment'),  # رزرو نوبت برای بیمار
-        ('break', 'Break')               # زمان استراحت
+        ('appointment', 'Appointment'),
+        ('break', 'Break')             
     ]
 
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
