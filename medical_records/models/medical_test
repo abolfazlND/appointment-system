@@ -1,0 +1,13 @@
+from django.db import models
+from ..models import MedicalRecord
+
+class MedicalTest(models.Model):
+    medical_record = models.ForeignKey(MedicalRecord, on_delete=models.CASCADE, related_name='medical_tests')
+    test_name = models.CharField(max_length=255, help_text="Name of the medical test (e.g., Blood Test, X-Ray)")
+    test_date = models.DateField(help_text="Date when the test was conducted")
+    result = models.TextField(help_text="Result of the medical test")
+    test_file = models.FileField(upload_to='medical_tests/', blank=True, null=True, help_text="Upload related files (e.g., scans, documents)")
+    notes = models.TextField(blank=True, null=True, help_text="Additional notes about the test or result")
+
+    def __str__(self):
+        return f"{self.test_name} on {self.test_date}"

@@ -1,0 +1,17 @@
+from django.db import models
+from ..models import MedicalRecord
+
+class Vaccination(models.Model):
+    medical_record = models.ForeignKey(MedicalRecord, on_delete=models.CASCADE, related_name='vaccinations')
+    vaccine_name = models.CharField(max_length=255, help_text="Name of the vaccine (e.g., Flu Vaccine)")
+    vaccination_date = models.DateField(help_text="Date when the vaccine was administered")
+    dosage = models.CharField(max_length=100, help_text="Dosage of the vaccine")
+    dosage_unit = models.DecimalField(max_digits=5, decimal_places=2, help_text="Dosage value of the vaccine")
+    dosage_unit = models.CharField(max_length=10, choices=[
+        ('ml', 'Milliliters'),
+        ('units', 'Units'),
+    ], help_text="Dosage unit (e.g., ml, units)")
+    notes = models.TextField(blank=True, null=True, help_text="Additional notes about the vaccination")
+
+    def __str__(self):
+        return f"{self.vaccine_name} on {self.vaccination_date}"
