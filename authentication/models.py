@@ -52,9 +52,7 @@ class User(AbstractUser, PermissionsMixin):
 
     USERNAME_FIELD = "phone_number"
 
-    # @TODO install black
-    # flake8
-    # install https://github.com/astral-sh/ruff
+    # @TODO install https://github.com/astral-sh/ruff
     REQUIRED_FIELDS = ["first_name", "last_name", "role"]
 
     def __str__(self):
